@@ -32,28 +32,28 @@ if (isset($_GET['v'])) {
         $h = curl_exec($ch);
         $info = curl_getinfo($ch);
         curl_close($ch);
-        $h = str_replace("\\", "", $h);
+        $h=str_replace("\\","",$h);
         if (preg_match('/(\/\/[\.\d\w\-\.\/\\\:\?\&\#\%\_\,]*(\.(srt|vtt)))/', $h, $s))
-            $srt = "https:" . $s[1];
+            $srt="https:".$s[1];
 
-        if (preg_match_all("/\(\'\w+\'\)\.innerHTML\s*\=\s*(.*?)\;/", $h, $m)) {
-            $e1 = $m[1][count($m[1]) - 1];
-            $e1 = str_replace("'", '"', $e1);
-            $d = explode("+", $e1);
+        if (preg_match_all("/\(\'\w+\'\)\.innerHTML\s*\=\s*(.*?)\;/",$h,$m)) {
+            $e1=$m[1][count($m[1])-1];
+            $e1=str_replace("'",'"',$e1);
+            $d=explode("+",$e1);
             $out = "";
-            for ($k = 0; $k < count($d); $k++) {
-                $s = trim($d[$k]);
-                preg_match("/\(?\"([^\"]+)\"\)?(\.substring\((\d+)\))?(\.substring\((\d+)\))?/", $s, $p);
+            for ($k=0;$k<count($d);$k++) {
+                $s=trim($d[$k]);
+                preg_match("/\(?\"([^\"]+)\"\)?(\.substring\((\d+)\))?(\.substring\((\d+)\))?/",$s,$p);
                 if (isset($p[3]) && isset($p[5]))
-                    $out .= substr(substr($p[1], $p[3]), $p[5]);
+                    $out .=substr(substr($p[1],$p[3]),$p[5]);
                 elseif (isset($p[3]))
-                    $out .= substr($p[1], $p[3]);
+                    $out .=substr($p[1],$p[3]);
                 else
-                    $out .= $p[1];
+                    $out .=$p[1];
             }
-            $link = $out;
+            $link=$out;
             $link .= "&stream=1";
-            if ($link[0] == "/") $link = "https:". $link;
+            if ($link[0]=="/") $link="https:".$link;
         }
     }
 }
