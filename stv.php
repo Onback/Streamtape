@@ -53,7 +53,7 @@ if (isset($_GET['v'])) {
             }
             $link = $out;
             $link .= "&stream=1";
-            if ($link[0] == "/") $link = "https:" . $link;
+            if ($link[0] == "/") $link = "https:". $link;
         }
     }
 }
